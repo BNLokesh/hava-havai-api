@@ -1,3 +1,4 @@
+// models.js
 const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = new Sequelize({
   dialect: 'sqlite',
@@ -8,7 +9,7 @@ const Country = sequelize.define('Country', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   name: { type: DataTypes.STRING, allowNull: false },
   continent_id: { type: DataTypes.INTEGER },
-  // Remove created_at and updated_at if not present in your SQLite schema
+  // Add other fields if needed
 });
 
 const City = sequelize.define('City', {
@@ -32,7 +33,7 @@ const Airport = sequelize.define('Airport', {
   city_id: { type: DataTypes.INTEGER }
 });
 
-City.belongsTo(Country, { foreignKey: 'country_id' });
-Airport.belongsTo(City, { foreignKey: 'city_id' });
+City.belongsTo(Country, { as: 'country', foreignKey: 'country_id' });
+Airport.belongsTo(City, { as: 'city', foreignKey: 'city_id' });
 
 module.exports = { sequelize, Country, City, Airport };
